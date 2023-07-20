@@ -16,9 +16,12 @@ def crearproductos(lista_productos):
             producto["costo"]=producto_costo
             producto["cantidad"]=producto_cantidad
             lista_productos.append(producto)
+            flag_repeticion = coincidenciaproducto(producto_nombre, producto_cantidad, lista_productos)
+            if not flag_repeticion:
+                lista_productos.append(producto)
             producto= {}
             pregunta=input("desea a gregar mas productos? si/no")
-            if str(pregunta) != "si":
+            if str(pregunta) != "SI":
                 break
 
             print(lista_productos)
@@ -29,6 +32,59 @@ def crearproductos(lista_productos):
 #print(l)
 #print(crearproductos(lp))
 def listaproductos(lista_productos): 
-    print('nombre|marca|costo|cantidad')
+    print('N° | producto | cantidad | precio')
+    counter = 0
     for producto in lista_productos:
-        print(f'{producto.get("nombre")}|{producto.get("marca")}|{producto.get("costo")}|{producto.get("cantidad")}')
+        counter += 1
+        print(f"{producto.get('nombre')} | {producto.get('costo')} | {producto.get('cantidad')}")
+
+def numerosdenetrada(mensaje): 
+    while True:
+        try:
+            numero_ingreso = int(input(mensaje))
+        except ValueError:
+            print("te equivocaste esto debe ser un numero")
+        else:
+            break
+    return numero_ingreso
+
+numerosdenetrada("dsfsdfsdfsfsdfsd")
+
+def coincidenciaproducto(producto_nombre, producto_cantidad, lista_productos): 
+    #agrega la cantidad de producto registrada
+    flag = False
+    for producto in lista_productos:
+        if producto.get("nombre") == producto_nombre:
+            print("este producto ya esta registrado")
+            producto["cantidad"] = producto.get('cantidad') + producto_cantidad
+            flag = True
+    return flag
+
+def venta_productos(lista_de_productos):
+    lista_venta = []
+    producto_venta = {}
+    listaproductos(lista_de_productos)
+    while True:
+        try:
+            seleccionproducto = int(input('elija el numero del producto: '))
+            producto = lista_de_productos[seleccionproducto-1]
+            producto_cantidad = int(input(f'escriba cantidad de {producto.get("nombre")}: '))
+           
+        except ValueError:
+            print("algo salio mal")
+        else:
+        
+            producto["cantidad"] = producto.get("cantidad") - producto_cantidad
+            producto_venta["producto"] = producto.get("nombre")
+            producto_venta["cantidad"] = producto_cantidad
+            producto_venta["subtotal"] = producto_cantidad * producto.get("costo")
+            lista_venta.append(producto_venta)
+            listaproductos(lista_de_productos)
+
+            producto_venta = {}
+            print(lista_venta)
+
+            pregunta=input("desea a comprar mas productos? si/no")
+            if str(pregunta) != "SI":
+                break
+tarea hacer que al vender un producto no se pueda vender otra vez el prodcuto si ya lo cambio y que aparesca que ya no hay stock si se acabron las unidades 
