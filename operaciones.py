@@ -1,4 +1,4 @@
-from productos import crearproductos,listaproductos
+from productos import crearproductos,listaproductos,venta_productos
 #l = []
 #print(crearproductos(l))
 def menu():
@@ -18,15 +18,21 @@ def menu():
             opcion = int(input("elige la opcion: "))
         except ValueError:
             print('has elegido una opcion que no esta en el menu')
-            listaproductos(lista_de_productos)
+           
 
         else:
             if opcion == 1: 
                 print("listando productos")
                 print(lista_de_productos)
+                 listaproductos(lista_de_productos)
             elif opcion == 2:
                 print("agregando mas productos")
                 crearproductos(lista_de_productos)
+
+            elif opcion == 3:
+                print("iniciando venta")
+                venta_productos(lista_de_productos)
+                
             elif opcion == 4:
                 print("saliendo")
                 flag = False
