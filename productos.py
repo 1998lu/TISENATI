@@ -36,19 +36,8 @@ def listaproductos(lista_productos):
     counter = 0
     for producto in lista_productos:
         counter += 1
-        print(f"{producto.get('nombre')} | {producto.get('costo')} | {producto.get('cantidad')}")
+        print(f"{counter} {producto.get('nombre')} | {producto.get('cantidad')} | {producto.get('costo')}")
 
-def numerosdenetrada(mensaje): 
-    while True:
-        try:
-            numero_ingreso = int(input(mensaje))
-        except ValueError:
-            print("te equivocaste esto debe ser un numero")
-        else:
-            break
-    return numero_ingreso
-
-numerosdenetrada("dsfsdfsdfsfsdfsd")
 
 def coincidenciaproducto(producto_nombre, producto_cantidad, lista_productos): 
     #agrega la cantidad de producto registrada
@@ -80,11 +69,19 @@ def venta_productos(lista_de_productos):
             producto_venta["subtotal"] = producto_cantidad * producto.get("costo")
             lista_venta.append(producto_venta)
             listaproductos(lista_de_productos)
-
+            flag_repeticion = duplicadoproducto(producto_venta, lista_de_productos)
+            if not flag_repeticion:
+                lista_de_productos.append(producto)
             producto_venta = {}
-            print(lista_venta)
-
             pregunta=input("desea a comprar mas productos? si/no")
             if str(pregunta) != "SI":
                 break
-tarea hacer que al vender un producto no se pueda vender otra vez el prodcuto si ya lo cambio y que aparesca que ya no hay stock si se acabron las unidades 
+            print(lista_venta)
+
+def duplicadoproducto(producto_venta, lista_de_productos): 
+    flag = False
+    for producto in lista_de_productos:
+        if producto.get("nombre") == producto_venta:
+            print("ya compró este producto")
+            flag = True
+    return flag
